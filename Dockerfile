@@ -12,9 +12,12 @@ ENV JENKINS_WORKUSER="jenkins" \
 COPY setup/ ${SETUP_DIR}/
 RUN bash ${SETUP_DIR}/install.sh
 
+COPY entrypoint.sh /sbin/entrypoint.sh
+RUN chmod 755 /sbin/entrypoint.sh
+
 EXPOSE 22/tcp
 
 VOLUME ["${JENKINS_WORKSPACE}"]
 WORKDIR ${JENKINS_WORKSPACE}
 
-CMD ["/usr/sbin/sshd", "-D"]
+ENTRYPOINT ["/sbin/entrypoint.sh"]
