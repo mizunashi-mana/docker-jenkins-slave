@@ -17,3 +17,4 @@ EXPOSE 22/tcp
 VOLUME ["${JENKINS_WORKSPACE}"]
 WORKDIR ${JENKINS_WORKSPACE}
 
+CMD ["/usr/sbin/sshd", "-D"]
