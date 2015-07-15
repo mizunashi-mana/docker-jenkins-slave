@@ -2,7 +2,7 @@ FROM java:latest
 MAINTAINER Mizunashi Mana <mizunashi_mana@mma.club.uec.ac.jp>
 
 RUN apt-get update \
- && apt-get install -y openssh-server sudo \
+ && apt-get install -y openssh-server sudo wget \
  && rm -rf /var/lib/apt/lists/*
 
 ENV JENKINS_WORKUSER="jenkins" \
