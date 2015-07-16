@@ -7,7 +7,7 @@ Jenkins Slave Dockerfile
 The image includes default example ssh key.  
 So, if you run this image without custom key option and publish ssh port, all of people can login.
 
-It is very dangerous that exposed ssh port publishes globally.
+**It is very dangerous that exposed ssh port publishes globally.**
 
 ## Installion
 
