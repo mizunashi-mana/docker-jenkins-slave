@@ -1,6 +1,13 @@
 # docker-jenkins-slave
 Jenkins Slave Dockerfile
 
+## Attention
+
+The image includes default example ssh key.  
+So, if you run this image without custom key option and publish ssh port, all of people can login.
+
+It is very dangerous that exposed ssh port publishes globally.
+
 ## Installion
 
 Pulling:
@@ -22,7 +29,7 @@ $ make build
 quickstart:
 
 ```bash
-$ docker run -d --name myjenkins-sl mizunashi/jenkins-slave
+$ make quickstart
 ```
 
 And, linked jenkins container:
@@ -33,8 +40,6 @@ $ docker run -d --name myjenkins --link myjenkins-sl:myjenkins-sl jenkins
 ```
 
 Then, you must be also setup jenkins slave.
-
-**Attension: Quickstart uses public authorized id keys!! So, it is very dangerous that you publish the quickstart port globally!**
 
 Using custom authorized_keys:
 

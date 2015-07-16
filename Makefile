@@ -1,5 +1,6 @@
 JENKINSSL_APP_NAME='myjenkinssl-app'
 JENKINSSL_DATA_NAME='myjenkinssl-data'
+SSH_KEYS_PATH="${PWD}/ssh-keys"
 
 all: build
 
@@ -8,13 +9,12 @@ build:
 
 quickstart:
 	@echo "Create SSH keys..."
-	@mkdir -p ssh-keys
-	@[ -f ssh-keys/id_rsa ] \
-		|| ssh-keygen -t rsa -f ssh-keys/id_rsa -C '' -N ''
+	@mkdir -p ${SSH_KEYS_PATH}
+	@[ -f ${SSH_KEYS_PATH}/id_rsa ] \
+		|| ssh-keygen -t rsa -f ${SSH_KEYS_PATH}/id_rsa -C '' -N ''
 	@echo "Starting jenkins slave container..."
 	@docker run --name=${JENKINSSL_APP_NAME} -d \
-		--env="AUTHORIZED_KEY_STRING=$(head -1 ssh-keys/id_rsa.pub)" \
-		--publish=30022:22 \
+		--env="AUTHORIZED_KEY_STRING=`head -1 ${SSH_KEYS_PATH}/id_rsa.pub`" \
 		mizunashi/jenkins-slave
 	@docker run --name=${JENKINSSL_DATA_NAME} -d \
 		--volumes-from=${JENKINSSL_APP_NAME} \
@@ -35,3 +35,6 @@ purge: stop
 logs:
 	@docker logs -f ${JENKINSSL_APP_NAME}
 
+test:
+	@ssh jenkins@`docker inspect -f '{{.NetworkSettings.IPAddress}}' ${JENKINSSL_APP_NAME}` \
+		-i ${SSH_KEYS_PATH}/id_rsa
