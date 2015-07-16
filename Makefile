@@ -7,8 +7,13 @@ build:
 	@docker build --tag=${USER}/jenkins-slave .
 
 quickstart:
+	@echo "Create SSH keys..."
+	@mkdir -p ssh-keys
+	@[ -f ssh-keys/id_rsa ] \
+		|| ssh-keygen -t rsa -f ssh-keys/id_rsa -C '' -N ''
 	@echo "Starting jenkins slave container..."
 	@docker run --name=${JENKINSSL_APP_NAME} -d \
+		--env="AUTHORIZED_KEY_STRING=$(head -1 ssh-keys/id_rsa.pub)" \
 		--publish=30022:22 \
 		mizunashi/jenkins-slave
 	@docker run --name=${JENKINSSL_DATA_NAME} -d \
