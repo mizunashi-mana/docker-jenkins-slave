@@ -1,4 +1,5 @@
 # docker-jenkins-slave
+
 Jenkins Slave Dockerfile
 
 ## Attention
@@ -32,6 +33,8 @@ quickstart:
 $ make quickstart
 ```
 
+The ssh key to login jenkins-slave is in `./ssh-keys` directory.
+
 And, linked jenkins container:
 
 ```bash
@@ -44,11 +47,15 @@ Then, you must be also setup jenkins slave.
 Using custom authorized_keys:
 
 ```bash
-$ docker run -d --name myjenkins-sl -e AUTHORIZED_KEYS_URL='https://your domain/your keys' mizunashi/jenkins-slave
+$ docker run -d --name myjenkins-sl \
+  -e AUTHORIZED_KEYS_URL='https://your domain/your keys' \
+  mizunashi/jenkins-slave
 ```
 
 Or
 
 ```bash
-$ docker run -d --name myjenkins-sl -e AUTHORIZED_KEY_STRING='your key string' mizunashi/jenkins-slave
+$ docker run -d --name myjenkins-sl \
+  -e AUTHORIZED_KEY_STRING='your key string' \
+  mizunashi/jenkins-slave
 ```

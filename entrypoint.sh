@@ -24,19 +24,20 @@ chmod 700 ${JENKINS_WORKSPACE}/.ssh
 chmod 600 ${JENKINS_WORKSPACE}/.ssh/authorized_keys
 chown -R ${JENKINS_WORKUSER}:${JENKINS_WORKUSER} ${JENKINS_WORKSPACE}/.ssh
 
+[ -f "/etc/ssh/ssh_host_rsa_key" ] || ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -C '' -N ''
+[ -f "/etc/ssh/ssh_host_dsa_key" ] || ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -C '' -N ''
+[ -f "/etc/ssh/ssh_host_ecdsa_key" ] || ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -C '' -N ''
+[ -f "/etc/ssh/ssh_host_ed25519_key" ] || ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -C '' -N ''
+
 echo "Printing fingerprint of authorized keys..."
 ssh-keygen -lf ${JENKINS_WORKSPACE}/.ssh/authorized_keys
 echo
 
 echo "Printing each fingerprint of host keys..."
-[ -f "/etc/ssh/ssh_host_rsa_key" ] || ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -C '' -N '' \
-  && ssh-keygen -lf /etc/ssh/ssh_host_rsa_key.pub
-[ -f "/etc/ssh/ssh_host_dsa_key" ] || ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -C '' -N '' \
-  && ssh-keygen -lf /etc/ssh/ssh_host_dsa_key.pub
-[ -f "/etc/ssh/ssh_host_ecdsa_key" ] || ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -C '' -N '' \
-  && ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub
-[ -f "/etc/ssh/ssh_host_ed25519_key" ] || ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -C '' -N '' \
-  && ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub
+ssh-keygen -lf /etc/ssh/ssh_host_rsa_key.pub
+ssh-keygen -lf /etc/ssh/ssh_host_dsa_key.pub
+ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub
+ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub
 echo
 
 set -x

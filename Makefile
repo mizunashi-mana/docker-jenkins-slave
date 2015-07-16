@@ -20,6 +20,7 @@ quickstart:
 		--volumes-from=${JENKINSSL_APP_NAME} \
 		busybox
 	@echo "Type 'make logs' for the logs"
+	@echo "Type 'make test' for the login test of SSH"
 
 stop:
 	@echo "Stopping jenkins slave app..."
